@@ -60,7 +60,7 @@ public class EstadoController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Estado> update(@PathVariable Long id, @RequestBody EstadoInputDTO estadoInputDTO) {
+    public ResponseEntity<EstadoOutputDTO> update(@PathVariable Long id, @RequestBody EstadoInputDTO estadoInputDTO) {
 
         try {
             Optional<Estado> possivelEstado = estadoRepository.findById(id);
@@ -69,10 +69,12 @@ public class EstadoController {
                 Estado estadoEncontrado = possivelEstado.get();
 
                 estadoEncontrado.setNome(estadoInputDTO.getNome());
+                estadoEncontrado.setSigla(estadoInputDTO.getSigla());
+                estadoEncontrado.setPais(paisRepository.findByNome(estadoInputDTO.getPais()));
 
                 Estado estadoAtualizado = estadoRepository.save(estadoEncontrado);
 
-                return new ResponseEntity<>(estadoAtualizado, HttpStatus.OK);
+                return new ResponseEntity<>(new EstadoOutputDTO(estadoAtualizado), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }

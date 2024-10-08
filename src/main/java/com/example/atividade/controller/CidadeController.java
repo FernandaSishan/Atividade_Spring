@@ -61,7 +61,7 @@ public class CidadeController {
     }
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Cidade> update(@PathVariable Long id, @RequestBody CidadeInputDTO cidadeInputDTO) {
+    public ResponseEntity<CidadeOutputDTO> update(@PathVariable Long id, @RequestBody CidadeInputDTO cidadeInputDTO) {
 
         try {
             Optional<Cidade> possivelCidade = cidadeRepository.findById(id);
@@ -70,10 +70,11 @@ public class CidadeController {
                 Cidade cidadeEncontrada = possivelCidade.get();
 
                 cidadeEncontrada.setNome(cidadeInputDTO.getNome());
+                cidadeEncontrada.setEstado(estadoRepository.findByNome(cidadeInputDTO.getEstado()));
 
                 Cidade cidadeAtualizada = cidadeRepository.save(cidadeEncontrada);
 
-                return new ResponseEntity<>(cidadeAtualizada, HttpStatus.OK);
+                return new ResponseEntity<>(new CidadeOutputDTO(cidadeAtualizada), HttpStatus.OK);
             } else {
                 return new ResponseEntity<>(HttpStatus.NOT_FOUND);
             }
