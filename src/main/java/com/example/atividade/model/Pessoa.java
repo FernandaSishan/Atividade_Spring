@@ -17,10 +17,9 @@ public class Pessoa {
     @ManyToOne
     private Cidade cidade;
 
-    public Pessoa(){
+    public Pessoa() {
 
     }
-
     public Pessoa(long id, String nome, String email, String telefone, Cidade cidade) {
         this.id = id;
         this.nome = nome;

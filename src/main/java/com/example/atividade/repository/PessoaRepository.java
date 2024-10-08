@@ -1,6 +1,5 @@
 package com.example.atividade.repository;
 
-import com.example.atividade.model.Pais;
 import com.example.atividade.model.Pessoa;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
