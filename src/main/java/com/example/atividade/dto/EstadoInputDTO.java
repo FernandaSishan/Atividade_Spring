@@ -39,6 +39,7 @@ public class EstadoInputDTO {
     public Estado build(PaisRepository paisRepository){
         Estado estado = new Estado();
         estado.setNome(this.nome);
+        estado.setSigla(this.sigla);
         estado.setPais(paisRepository.findByNome(this.pais));
         return estado;
     }

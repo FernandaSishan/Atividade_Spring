@@ -26,6 +26,17 @@ public class CidadeController {
     @Autowired
     private EstadoRepository estadoRepository;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CidadeOutputDTO> read (@PathVariable Long id){
+        Optional<Cidade> cidade = cidadeRepository.findById(id);
+        if(cidade.isPresent()){
+            return new ResponseEntity<>(new CidadeOutputDTO(cidade.get()), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
+
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<CidadeOutputDTO>> list(){
 

@@ -1,8 +1,10 @@
 package com.example.atividade.controller;
 
 
+import com.example.atividade.dto.CidadeOutputDTO;
 import com.example.atividade.dto.PessoaInputDTO;
 import com.example.atividade.dto.PessoaOutputDTO;
+import com.example.atividade.model.Cidade;
 import com.example.atividade.model.Pessoa;
 import com.example.atividade.repository.CidadeRepository;
 import com.example.atividade.repository.PessoaRepository;
@@ -26,6 +28,16 @@ public class PessoaController {
     @Autowired
     private CidadeRepository cidadeRepository;
 
+    @GetMapping("/{id}")
+    public ResponseEntity<PessoaOutputDTO> read (@PathVariable Long id){
+        Optional<Pessoa> pessoa = pessoaRepository.findById(id);
+        if(pessoa.isPresent()){
+            return new ResponseEntity<>(new PessoaOutputDTO(pessoa.get()), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PessoaOutputDTO>> list(){

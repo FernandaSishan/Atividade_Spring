@@ -1,7 +1,9 @@
 package com.example.atividade.controller;
 
+import com.example.atividade.dto.CidadeOutputDTO;
 import com.example.atividade.dto.PaisInputDTO;
 import com.example.atividade.dto.PaisOutputDTO;
+import com.example.atividade.model.Cidade;
 import com.example.atividade.model.Pais;
 import com.example.atividade.repository.PaisRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,17 @@ public class PaisController {
 
     @Autowired
     private PaisRepository paisRepository;
+
+    @GetMapping("/{id}")
+    public ResponseEntity<PaisOutputDTO> read (@PathVariable Long id){
+        Optional<Pais> pais = paisRepository.findById(id);
+        if(pais.isPresent()){
+            return new ResponseEntity<>(new PaisOutputDTO(pais.get()), HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<PaisOutputDTO>> list(){

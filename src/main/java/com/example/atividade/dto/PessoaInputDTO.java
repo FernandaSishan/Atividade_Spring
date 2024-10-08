@@ -48,6 +48,8 @@ public class PessoaInputDTO {
     public Pessoa build(CidadeRepository cidadeRepository){
         Pessoa pessoa = new Pessoa();
         pessoa.setNome(this.nome);
+        pessoa.setEmail(this.email);
+        pessoa.setTelefone(this.telefone);
         pessoa.setCidade(cidadeRepository.findByNome(this.cidade));
         return pessoa;
     }
